@@ -1,0 +1,19 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <script src="Brython-3.6.2/brython.js"></script>
+        <script src="Brython-3.6.2/brython_stdlib.js"></script>
+    </head>
+    <body onload="brython(1)">
+        <script type="text/python">
+            from browser import document, alert
+            alert("nachricht")
+        </script>
+        <textarea id="source-code-text">
+        </textarea>
+        <input type="button" id="execute-button" value="Ausführen!">
+    </body>
+</html>
