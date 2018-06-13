@@ -4,11 +4,17 @@
         <meta name="viewport"
               content="width=device-width, initial-scale=1, user-scalable=no">
         <link rel="stylesheet" type="text/css" href="css/index.css">
-        <script src="Brython-3.6.2/brython.js"></script>
+
+	<script src="Brython-3.6.2/brython.js"></script>
         <script src="Brython-3.6.2/brython_stdlib.js"></script>
     </head>
     <body onload="brython(1)">
-        <script type="text/python">
+      <div>
+	<iframe src="texs/tex_input.html" width="666em" height="500em" name="texframe" allowTransparency="true" scrolling="no" frameborder="0" >
+	</iframe>
+      </div>
+
+      <script type="text/python">
             from browser import document, alert
             alert("nachricht")
             exec("print(\"wo landet das?\")")
