@@ -1,0 +1,5 @@
+#dont show emacs backups
+*~
+#hide tex source folder
+texs/
+
