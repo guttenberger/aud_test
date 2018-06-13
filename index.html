@@ -10,11 +10,32 @@
     <body onload="brython(1)">
         <script type="text/python">
             from browser import document, alert
-            alert("nachricht")
+            import sys, traceback
             exec("print(\"wo landet das?\")")
+
+            # change the stdout and stderr
+            class OutputToHTML:
+                def __init__(self, cls):
+                    self.cls = cls
+                def write(self, string):
+                    output = document.getElementById("output")
+                    element = document.createElement("pre")
+                    element.classList.add(self.cls)
+                    element.innerText = string
+                    output.appendChild(element)
+            sys.stdout = OutputToHTML("stdout")
+            sys.stderr = OutputToHTML("stderr")
+            def test_output():
+                try:
+                    asdsa
+                except:
+                    traceback.print_exc(file=sys.stderr)
+                print(sys.stdout)
+            test_output()
         </script>
         <textarea id="source-code-text">
         </textarea>
         <input type="button" id="execute-button" value="Ausführen!">
+        <div id="output"></div>
     </body>
 </html>
