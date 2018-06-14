@@ -6,7 +6,7 @@ In diesem Repository werden automatische Tests für Übungsaufgaben in Python f�
 Software
 --------
 
-Dies ist eine [Webseite], die mal sich ansehen kann.
+Dies ist eine [Webseite], die man sich ansehen kann.
 Jeder kann diesen Code somit für sich testen und sehen, ob das Programm einigermaßen das tut, was es soll.
 
 [Webseite]: https://chiefgewickelt.github.io/aud_test/index.html
