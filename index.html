@@ -17,27 +17,56 @@
         <script type="text/python">
             from browser import document, alert
             import sys, traceback
+            import linecache # for making the source code available
             exec("print(\"wo landet das?\")")
 
             # change the stdout and stderr
+            output = document.getElementById("output")
             class OutputToHTML:
+                """A file interface for Output."""
                 def __init__(self, cls):
+                    """Create an output object with a css class for styling."""
                     self.cls = cls
                 def write(self, string):
-                    output = document.getElementById("output")
+                    """Write a new string to the output."""
                     element = document.createElement("pre")
                     element.classList.add(self.cls)
                     element.innerText = string
                     output.appendChild(element)
             sys.stdout = OutputToHTML("stdout")
             sys.stderr = OutputToHTML("stderr")
-            def test_output():
+            def clear_output():
+                output.innerHTML = ""
+            
+            # running code
+            class SourceLoader:
+                """Loaders make the source code of a module available."""
+                def __init__(self, code):
+                    """Create a new loader object with code."""
+                    self.code = code
+                def get_source(self, *args):
+                    """Return the source code of the module."""
+                    print("get_source", args)
+                    return self.code
+            executions = 0
+            def run_code(*args):
+                """Run the code in the text field."""
+                global executions
                 try:
-                    asdsa
+                    executions += 1
+                    file = "run-{}.py".format(executions)
+                    clear_output()
+                    code = document.getElementById("source-code-text").value
+                    globals = {
+                        "__loader__": SourceLoader(code),
+                        "__name__": "__main__",
+                        "__file__": file,
+                    }
+                    linecache.updatecache(file, globals)
+                    exec(code, globals)
                 except:
                     traceback.print_exc(file=sys.stderr)
-                print(sys.stdout)
-            test_output()
+            document.getElementById("execute-button").bind("click", run_code)
         </script>
         <textarea id="source-code-text">
         </textarea>
