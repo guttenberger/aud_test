@@ -1,7 +1,7 @@
 aud_test
 ========
 
-In diesem Repository werden automatische Tests für Übungsaufgaben in Python für den Kurs Einführung in die Programmierung an der Uni-Potsdam verwaltet.
+In diesem Repository werden automatische Tests für Übungsaufgaben in Python für den Kurs Algorithmen und Datenstrukturen (=aud) an der Uni-Potsdam verwaltet.
 
 Software
 --------
