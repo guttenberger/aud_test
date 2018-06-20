@@ -40,6 +40,7 @@ class TestQuicksort(unittest.TestCase):
         self.assertEqual(input, output, message + "\n{} ist erwartet aber\n{} wurde geliefert.".format(input, output))
 
     def assertSwap(self, input, swap, message):
+        self.test_01_quicksort_function_exists()
         self.sort(input)
         sort_swap = self.stdout.getvalue().split()
         excpected_swap = swap.split()
@@ -119,7 +120,4 @@ class TestQuicksort(unittest.TestCase):
             list(range(5)) + list(range(5, 0, -1)), 
             "1,9 2,9 3,8 4,9 5,8 6,7 5,6 7,9 8,9", 
             "Many Elements get swapped around in a reversed list.")
-
-
-    
 
