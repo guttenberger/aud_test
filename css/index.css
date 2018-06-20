@@ -34,3 +34,7 @@ footer a {
     border-radius: 0.2em;
 }
 
+.hidden {
+    display: none;
+}
+

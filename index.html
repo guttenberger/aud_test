@@ -8,7 +8,8 @@
         <script src="Brython-3.6.2/brython_stdlib.js"></script>
     </head>
     <body onload="brython(1)">
-        <h1>Aufgabentests</h1>
+        <h1>Aufgabentests f&uuml;r Quicksort</h1>
+        <div id="loading">lade ...</div>
         <p>
             Um die Lösungen zu entwicklen eignet sich
             <a href="http://pythontutor.com/visualize.html">Python Tutor</a>.
@@ -18,8 +19,11 @@
             import run_code
             import output
             import test_code
+            from browser import document
 
             output.capture()
+            loading = document.getElementById("loading")
+            loading.classList.add("hidden")
             run_code.run_code()
 
         </script>
