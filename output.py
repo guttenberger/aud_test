@@ -1,8 +1,6 @@
 # change the stdout and stderr
 import sys
 from browser import document
-from loader import FileLoader
-__loader__ = FileLoader(__file__)
 
 outputElement = document.getElementById("output")
 
@@ -16,7 +14,8 @@ class OutputToHTML:
     def write(self, string):
         """Write a new string to the output."""
         element = document.createElement("pre")
-        element.classList.add(self.cls)
+        for cls in self.cls:
+            element.classList.add(cls)
         element.innerText = string
         outputElement.appendChild(element)
     
@@ -30,8 +29,8 @@ class OutputToHTML:
 
 def capture():
     """Capture the output."""
-    sys.stdout = stdout = OutputToHTML("stdout")
-    sys.stderr = stderr = OutputToHTML("stderr")
+    sys.stdout = stdout = OutputToHTML(("stdout", "output"))
+    sys.stderr = stderr = OutputToHTML(("stderr", "output"))
     return stdout, stderr
 
 def clear():

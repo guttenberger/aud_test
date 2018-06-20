@@ -23,6 +23,10 @@ footer a {
     color: red;
 }
 
+.output {
+    display: contents; /* no extra lines */
+}
+
 
 #output {
     background: #dddddd;
