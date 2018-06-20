@@ -64,7 +64,7 @@ class TestQuicksort(unittest.TestCase):
         self.assert_is_sorted([1, 1], [1, 1], "Zwei gleiche Elemente.")
         
     def test_05_can_sort_two_unequal_sorted_elements(self):
-        self.assert_is_sorted([1, 2], [1, 2], "Zwei sortierte Elemente.")
+        self.assert_is_sorted([1, 2], [1, 2], "Zwei vertauschte Elemente werden in der selben Liste sortiert.")
         
     def test_06_can_sort_two_equal_elements(self):
         self.assert_is_sorted([2000000000000, 1], [1, 2000000000000], "Zwei falsch sortierte Elemente.")
