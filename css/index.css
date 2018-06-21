@@ -23,10 +23,18 @@ footer a {
     color: red;
 }
 
+.output {
+    display: contents; /* no extra lines */
+}
+
 
 #output {
     background: #dddddd;
     padding: 0.2em;
     border-radius: 0.2em;
+}
+
+.hidden {
+    display: none;
 }
 
