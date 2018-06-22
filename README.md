@@ -26,3 +26,10 @@ http://rawgit.com/chiefgewickelt/aud_test/master/index.html
 
 [Webseite]: https://chiefgewickelt.github.io/aud_test/index.html
 
+Quicksort Test
+--------------
+
+Die Ausgabe von vertauschten Indices kann getestet werden. Wichtig dabei ist, dass das Format
+i,j  
+eingehalten wird (keine Spaces mit zeilenumbruch, Komma beachten)
+i<j (?), i!=j
