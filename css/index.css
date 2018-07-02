@@ -1,40 +1,78 @@
-
-
-footer {
-  color: #888888;
-  border-top-width: 1px;
-  border-top-style: solid;
-  border-top-color: black;
-  margin-top: 0.5em;
-  padding-top: 0.5em;
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: arial;
+    box-sizing: border-box;
 }
-
-footer a {
-  color: #888888;
+#wrapper {
+    min-height: 100%;
+    margin-bottom: -50px;
 }
-
-
+h1 {
+    text-align: center;
+    background-color: #01679e;
+    color: white;
+    padding: 20px 5px;
+    text-shadow: 2px 2px 2px #262228;
+} 
 #source-code-text {
-    width: 100%;
-    height: 10em;
+    display: block;
+    width: 95%;
+    min-height: 40vh;
+    margin: 10px auto;
+    background-color: #262228;
+    color: white;
+    font-size: 16px;
 }
-
+#execute-button {
+    background-color: #007849;
+    padding: 10px 0;
+    border-radius: 3px;
+    font-size: 20px;
+    color: white;
+    display: block;
+    margin: 0 auto;
+    width: 95%;
+}
+#loading, #wrapper p, #output {
+    width: 95%;
+    margin: 0 auto;
+}
 .stderr {
     color: red;
 }
-
 .output {
     display: contents; /* no extra lines */
 }
-
-
 #output {
     background: #dddddd;
     padding: 0.2em;
     border-radius: 0.2em;
+    margin: 10px auto;
 }
-
 .hidden {
     display: none;
 }
+footer {
+    text-align: center;
+    background-color: #005787;
+    color: white;
+    padding: 0.4em 0 0 0;
+    text-shadow: 1px 1px 1px #262228;
+}
+footer a {
+    color: white;
+}
+footer, .push {
+    height: 50px;
+}
 
+@media only screen and (max-width: 900px) {
+    #wrapper {
+        margin-bottom: -80px;
+    }
+    footer,
+    .push {
+        height: 80px;
+    }
+}
