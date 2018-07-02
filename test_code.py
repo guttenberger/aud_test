@@ -8,7 +8,9 @@ def test_code(globals):
     """Test the result of the code execution."""
     loader = unittest.TestLoader()
     TestQuicksort.globals = globals
-    suite = loader.loadTestsFromTestCase(TestQuicksort)
+    #suite = loader.loadTestsFromTestCase(TestQuicksort)
+    suite = loader.loadTestsFromTestCase(DynProg)
+    
     runner = unittest.TextTestRunner()
     runner.run(suite)
     
@@ -151,8 +153,39 @@ class TestQuicksort(unittest.TestCase):
         return createChart
         
 
-    # test cases for setup
+    # test case for optimization
 
     def test_best_value(self):
-        items ##continue here
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        bestValRef = 7
+        self.assertEqual(createChart(items, maxWeight)[-1][-1][0],bestValRef, "Der bestmögliche Wert ist ein anderer")
         
+    def test_best_choice(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        bestValRef = 7
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+        givenChoice = bestChoice(refChart, items)
+        #items should be as long as bestChoice return value
+        self.assertEqual(len(givenChoice),len(items), "Die Länge des Rückgabewertes von bestChoice ist nicht der Spezification entsprechend")
+        #items should only contain 0 or 1
+        assertCountEqual(list(set(givenCoice)),[0,1],"bestChoice return value enthält andere Werte als 0 und 1")
+        #bestchoice meigt not be unique, so check value sum of given choice
+        valSum = 0
+        weightSum = 0
+        for i in range(len(items)):
+            #if item packed
+            if givenChoice[i]: 
+                valSum += items[i][0]
+                weightSum += items[i][1]
+
+        self.assertIsEqual(valSum,valRef, "der Gesamtwert der bestimmten besten Auswahl weicht von dem Vergleichswert ab")
+        #max Weight shoul not be exeeded
+        self.assertLessEqual(weightSum, maxWeight, "das Gesamtgewicht der bestimmten Auswahl ist zu gross")
+            
