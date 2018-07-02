@@ -8,31 +8,34 @@
         <script src="Brython-3.6.2/brython_stdlib.js"></script>
     </head>
     <body onload="brython(1)">
-        <h1>Aufgabentests f&uuml;r Quicksort</h1>
-        <div id="loading">lade ...</div>
-        <p>
-            Um die Lösungen zu entwicklen eignet sich
-            <a href="http://pythontutor.com/visualize.html">Python Tutor</a>.
-            Hier kannst du deine Abgabe testen, ob sie so einigermaßen hinhaut.
-        </p>
-        <script type="text/python">
-            import run_code
-            import output
-            import test_code
-            from browser import document
+        <div id="wrapper">
+            <h1>Aufgabentests f&uuml;r Quicksort</h1>
+            <div id="loading">lade ...</div>
+            <p>
+                Um die Lösungen zu entwicklen eignet sich
+                <a href="http://pythontutor.com/visualize.html">Python Tutor</a>.
+                Hier kannst du deine Abgabe testen, ob sie so einigermaßen hinhaut.
+            </p>
+            <script type="text/python">
+                import run_code
+                import output
+                import test_code
+                from browser import document
 
-            output.capture()
-            loading = document.getElementById("loading")
-            loading.classList.add("hidden")
-            run_code.run_code()
+                output.capture()
+                loading = document.getElementById("loading")
+                loading.classList.add("hidden")
+                run_code.run_code()
 
-        </script>
-        <textarea id="source-code-text">
-        </textarea>
-        <input type="button" id="execute-button" value="Ausführen!">
-        (Strg + Enter)
-        <div id="output"></div>
-        <footer>
+            </script>
+            <textarea id="source-code-text">
+            </textarea>
+            <input type="button" id="execute-button" value="Ausführen!">
+            <p>(Strg + Enter)</p>
+            <div id="output"></div>
+            <div class="push"></div>
+        </div>
+        <footer id="footer">
             Die Tests für die Aufgaben werden auf
             <a href="https://github.com/chiefgewickelt/aud_test">GitHub</a>
             entwickelt.
