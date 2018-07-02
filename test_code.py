@@ -42,6 +42,7 @@ class TestQuicksort(unittest.TestCase):
     def assertSwap(self, input, swap, message):
         self.test_01_quicksort_function_exists()
         self.sort(input)
+
         sort_swap = self.stdout.getvalue().split()
         excpected_swap = swap.split()
         diff = difflib.ndiff(sort_swap, excpected_swap)
@@ -121,3 +122,37 @@ class TestQuicksort(unittest.TestCase):
             "1,9 2,9 3,8 4,9 5,8 6,7 5,6 7,9 8,9", 
             "Many Elements get swapped around in a reversed list.")
 
+
+#testeing dynprog (refactored l8r ?)            
+            
+ class DynProg(unittest.TestCase):
+    """Test dynanic programming task according to its specification.
+    """
+    
+    globals = None # will be set by test_code
+    
+    # set up & tear down
+    
+    def setUp(self):
+        """Initialize the test case."""
+        self.bestChoice = self.globals.get("bestChoice", None)
+        self.old_stdout = sys.stdout
+        self.stdout = sys.stdout = StringIO()
+
+    def tearDown(self):
+        sys.stdout = self.old_stdout
+
+    # helpers
+
+    @property
+    def createChart(self):
+        createChart = self.globals.get("createChart", None)
+        self.assertIsNotNone(createChart, "Ich benötige eine Funktion namens createChart")
+        return createChart
+        
+
+    # test cases for setup
+
+    def test_best_value(self):
+        items ##continue here
+        
