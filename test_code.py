@@ -167,9 +167,8 @@ class TestDynProg(unittest.TestCase):
         bestValRef = 7
         self.assertEqual(self.createChart(items, maxWeight)[-1][-1][0],bestValRef, "Der bestmögliche Wert ist ein anderer")
         
-    def test_best_choice(self):
+    def test_bestChoice_value_is_equal_to_reference_value(self):
         items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
-        maxWeight = 8
         bestValRef = 7
         chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
                     [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
@@ -178,20 +177,62 @@ class TestDynProg(unittest.TestCase):
                     [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
                     [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
         givenChoice = self.bestChoice(chartRef, items)
-        #items should be as long as bestChoice return value
-        self.assertEqual(len(givenChoice),len(items), "Die Länge des Rückgabewertes von bestChoice ist nicht der Spezification entsprechend")
-        #items should only contain 0 or 1
-        self.assertCountEqual(list(set(givenChoice)),[0,1],"bestChoice return value enthält andere Werte als 0 und 1")
-        #bestchoice meigt not be unique, so check value sum of given choice
+       
+        #bestchoice meigt not be unique, so just check summed up values of given choice
         valSum = 0
-        weightSum = 0
         for i in range(len(items)):
             #if item packed
             if givenChoice[i]: 
                 valSum += items[i][0]
-                weightSum += items[i][1]
 
         self.assertEqual(valSum,bestValRef, "der Gesamtwert der bestimmten besten Auswahl weicht von dem Vergleichswert ab")
-        #max Weight shoul not be exeeded
-        self.assertLessEqual(weightSum, maxWeight, "das Gesamtgewicht der bestimmten Auswahl ist zu gross")
+
+
+    def test_bestCoice_weight_is_le_max_weight(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+        givenChoice = self.bestChoice(chartRef, items)
+        
+        #bestchoice meigt not be unique, so check value sum of given choice
+        weightSum = 0
+        for i in range(len(items)):
+            #if item packed
+            if givenChoice[i]:
+                weightSum += items[i][1]
+
+
+        #max Weight should not be exeeded
+        self.assertLessEqual(weightSum, maxWeight, "das Gesamtgewicht der bestimmten Auswahl sollte kleiner als das Maximalgewicht sein")
             
+    def test_bestChoice_returns_list_containing_0s_or_1s(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+
+        givenChoice = self.bestChoice(chartRef, items)
+        #returned list should only contain 0 or 1
+        self.assertCountEqual(list(set(givenChoice)),[0,1],"bestChoice sollte eine Liste aus 0en und 1en zurückgeben.")
+
+    def test_bestChoice_returns_list_as_long_as_item_list(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+
+        givenChoice = self.bestChoice(chartRef, items)
+
+        #items should be as long as bestChoice return value
+        self.assertEqual(len(givenChoice),len(items), "Die Länge des Rückgabewertes von bestChoice sollte der Länge der Gegenstandsliste entsprechen.")
