@@ -137,8 +137,7 @@ class TestDynProg(unittest.TestCase):
     # set up & tear down
     
     def setUp(self):
-        """Initialize the test case."""
-        self.bestChoice = self.globals.get("bestChoice", None)
+        """Initialize the test case."""        
         self.old_stdout = sys.stdout
         self.stdout = sys.stdout = StringIO()
 
@@ -152,7 +151,13 @@ class TestDynProg(unittest.TestCase):
         createChart = self.globals.get("createChart", None)
         self.assertIsNotNone(createChart, "Ich benötige eine Funktion namens createChart")
         return createChart
-        
+
+    @property
+    def bestChoice(self):
+        bestChoice = self.globals.get("bestChoice", None)
+        self.assertIsNotNone(bestChoice, "Ich benötige eine Funktion namens bestChoice")
+        return bestChoice
+         
 
     # test case for optimization
 
