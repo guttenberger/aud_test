@@ -7,8 +7,11 @@ import difflib
 def test_code(globals):
     """Test the result of the code execution."""
     loader = unittest.TestLoader()
-    TestQuicksort.globals = globals
-    suite = loader.loadTestsFromTestCase(TestQuicksort)
+    #TestQuicksort.globals = globals
+    #suite = loader.loadTestsFromTestCase(TestQuicksort)
+    TestDynProg.globals = globals
+    suite = loader.loadTestsFromTestCase(TestDynProg)
+    
     runner = unittest.TextTestRunner()
     runner.run(suite)
     
@@ -42,6 +45,7 @@ class TestQuicksort(unittest.TestCase):
     def assertSwap(self, input, swap, message):
         self.test_01_quicksort_function_exists()
         self.sort(input)
+
         sort_swap = self.stdout.getvalue().split()
         excpected_swap = swap.split()
         diff = difflib.ndiff(sort_swap, excpected_swap)
@@ -121,3 +125,114 @@ class TestQuicksort(unittest.TestCase):
             "1,9 2,9 3,8 4,9 5,8 6,7 5,6 7,9 8,9", 
             "Many Elements get swapped around in a reversed list.")
 
+
+#testeing dynprog (refactored l8r ?)            
+            
+class TestDynProg(unittest.TestCase):
+    """Test dynanic programming task according to its specification.
+    """
+    
+    globals = None # will be set by test_code
+    
+    # set up & tear down
+    
+    def setUp(self):
+        """Initialize the test case."""        
+        self.old_stdout = sys.stdout
+        self.stdout = sys.stdout = StringIO()
+
+    def tearDown(self):
+        sys.stdout = self.old_stdout
+
+    # helpers
+
+    @property
+    def createChart(self):
+        createChart = self.globals.get("createChart", None)
+        self.assertIsNotNone(createChart, "Ich benötige eine Funktion namens createChart")
+        return createChart
+
+    @property
+    def bestChoice(self):
+        bestChoice = self.globals.get("bestChoice", None)
+        self.assertIsNotNone(bestChoice, "Ich benötige eine Funktion namens bestChoice")
+        return bestChoice
+         
+
+    # test case for optimization
+
+    def test_best_value(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        bestValRef = 7
+        self.assertEqual(self.createChart(items, maxWeight)[-1][-1][0],bestValRef, "Der bestmögliche Wert ist ein anderer")
+        
+    def test_bestChoice_value_is_equal_to_reference_value(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        bestValRef = 7
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+        givenChoice = self.bestChoice(chartRef, items)
+       
+        #bestchoice meigt not be unique, so just check summed up values of given choice
+        valSum = 0
+        for i in range(len(items)):
+            #if item packed
+            if givenChoice[i]: 
+                valSum += items[i][0]
+
+        self.assertEqual(valSum,bestValRef, "der Gesamtwert der bestimmten besten Auswahl weicht von dem Vergleichswert ab")
+
+
+    def test_bestCoice_weight_is_le_max_weight(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+        givenChoice = self.bestChoice(chartRef, items)
+        
+        #bestchoice meigt not be unique, so check value sum of given choice
+        weightSum = 0
+        for i in range(len(items)):
+            #if item packed
+            if givenChoice[i]:
+                weightSum += items[i][1]
+
+
+        #max Weight should not be exeeded
+        self.assertLessEqual(weightSum, maxWeight, "das Gesamtgewicht der bestimmten Auswahl sollte kleiner als das Maximalgewicht sein")
+            
+    def test_bestChoice_returns_list_containing_0s_or_1s(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+
+        givenChoice = self.bestChoice(chartRef, items)
+        #returned list should only contain 0 or 1
+        self.assertCountEqual(list(set(givenChoice)),[0,1],"bestChoice sollte eine Liste aus 0en und 1en zurückgeben.")
+
+    def test_bestChoice_returns_list_as_long_as_item_list(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+
+        givenChoice = self.bestChoice(chartRef, items)
+
+        #items should be as long as bestChoice return value
+        self.assertEqual(len(givenChoice),len(items), "Die Länge des Rückgabewertes von bestChoice sollte der Länge der Gegenstandsliste entsprechen.")
