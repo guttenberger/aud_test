@@ -166,7 +166,19 @@ class TestDynProg(unittest.TestCase):
         maxWeight = 8
         bestValRef = 7
         self.assertEqual(self.createChart(items, maxWeight)[-1][-1][0],bestValRef, "Der bestmögliche Wert ist ein anderer")
-        
+
+    def test_createChart_chart_is_equal_to_reference_chart(self):
+        items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
+        maxWeight = 8
+        chartRef = [[(0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)],
+                    [(0, 0), (0, 0), (0, 0), (0, 0), (3, 1), (3, 1), (3, 1), (3, 1), (3, 1)],
+                    [(0, 0), (1, 1), (1, 1), (1, 1), (3, 0), (4, 1), (4, 1), (4, 1), (4, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 1), (5, 1), (5, 1)],
+                    [(0, 0), (1, 0), (1, 0), (1, 0), (3, 0), (4, 0), (5, 0), (5, 0), (6, 1)],
+                    [(0, 0), (1, 0), (2, 1), (3, 1), (3, 0), (4, 0), (5, 0), (6, 1), (7, 1)]]
+
+        self.assertEqual(self.createChart(items, maxWeight),chartRef, "Die erstellte Tabelle ist falsch")
+
     def test_bestChoice_value_is_equal_to_reference_value(self):
         items = [(3,4),(1,1),(4,5),(3,4),(2,2)]
         bestValRef = 7
