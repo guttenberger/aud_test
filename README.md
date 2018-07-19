@@ -20,11 +20,11 @@ Um an diesem Programm zu entwickeln, kannst du
 Du kannst dir die Version, die bei dir läuft immer durch ersetzen
 von Nutzername `chiefgewickelt` und Branch `master` ansehen:
 
-http://rawgit.com/chiefgewickelt/aud_test/master/index.html
+http://rawgit.com/guttenberger/aud_test/master/index.html
 
 
 
-[Webseite]: https://chiefgewickelt.github.io/aud_test/index.html
+[Webseite]: https://guttenberger.github.io/aud_test/index.html
 
 Quicksort Test
 --------------
